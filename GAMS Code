@@ -5,6 +5,9 @@ This code is written by Arup Ratan Paramanik for the article, "A Z-Number Slacks
 The article is published in Journal of Cleaner Production.
 DOI:
 
+For using this code, please cite the article as:
+""
+
 $Offtext
 
 Set i      'Suppliers' /SSS_1*SSS_13/
