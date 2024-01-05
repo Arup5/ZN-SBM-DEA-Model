@@ -350,7 +350,7 @@ $Ontext
 
 Based on the values of RI, rank the DMUs (i.e., suppliers) in its "descending order".
 
-NOTE: 
+NOTE: In order to select a RTS condition, we have to write the equations, Const411L, Const421L, Const412L, Const422L, Const411G, Const421G, Const412G, and Const422G, as follows:
 
 ## Under CRS condition:
 Const411L(j0, w0) ..  sum(i$(not j0(i)),L1L(i, w0)) =g= 0 ;
