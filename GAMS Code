@@ -1,0 +1,396 @@
+$Title  A Z-Number Slacks-Based Measure DEA model-based Framework for Sustainable Supplier Selection with Imprecise Information
+$Ontext
+
+This code is written by Arup Ratan Paramanik for the article, "A Z-Number Slacks-Based Measure DEA model-based Framework for Sustainable Supplier Selection with Imprecise Information".
+The article is published in Journal of Cleaner Production.
+DOI:
+
+$Offtext
+
+Set i      'Suppliers' /SSS_1*SSS_13/
+    j      'inputs and outputs' /inp1, inp2, inp3, inp4, inp5, inp6, out1, out2, out3, out4, out5/
+    l      'three points of tfn' /a, b, c/
+    k      'reliability tfn' /d, e, f /
+    inp(j)     'inputs' /inp1, inp2, inp3, inp4, inp5, inp6/
+    out(j)     'outputs'/out1, out2, out3, out4, out5/
+    j0(i)  'refernce DMU'
+    w   "set of alpha-levels" /alpha0, alpha1, alpha2, alpha3, alpha4, alpha5, alpha6, alpha7, alpha8, alpha9, alpha10/
+    w0(w)  'refernce alpha-level';
+
+Parameter
+          m  total number of inputs
+          s  total number of outputs
+          ;
+m = card(inp);
+s = card(out);
+
+Table ZA(i, j, l)
+               inp1.a               inp1.b              inp1.c           inp2.a         inp2.b         inp2.c          inp3.a           inp3.b           inp3.c           inp4.a           inp4.b           inp4.c            inp5.a             inp5.b              inp5.c             inp6.a             inp6.b            inp6.c            out1.a          out1.b          out1.c          out2.a            out2.b          out2.c            out3.a          out3.b          out3.c          out4.a          out4.b          out4.c          out5.a          out5.b          out5.c
+SSS_1        581786.00000        619909.00000        668228.00000        1.00000        2.00000        3.00000        240.00000        270.00000        272.00000        119.00000        159.00000        193.00000        76950.00000         105681.00000        120503.00000       13698.00000        14013.00000       14098.00000       86.00000        98.00000        104.00000        115.00000        120.00000        165.00000        65.00000        67.00000        67.00000        46.00000        55.00000        60.00000        54.00000        74.00000        77.00000
+SSS_2        1008774.00000       1037340.00000       1056562.00000       2.00000        3.00000        5.00000        166.00000        192.00000        210.00000        166.00000        186.00000        229.00000        146345.00000        158050.00000        178898.00000       15559.00000        15722.00000       16173.00000       142.00000       172.00000       187.00000        171.00000        177.00000        190.00000        69.00000        78.00000        90.00000        37.00000        40.00000        46.00000        65.00000        84.00000        86.00000
+SSS_3        696904.00000        704119.00000        719015.00000        1.00000        1.00000        2.00000        369.00000        388.00000        426.00000        138.00000        177.00000        189.00000        31073.00000         45554.00000         54103.00000        5633.00000         5781.00000        5793.00000        112.00000       116.00000       133.00000        81.00000         96.00000         101.00000        79.00000        79.00000        99.00000        79.00000        81.00000        88.00000        36.00000        37.00000        45.00000
+SSS_4        587934.00000        627634.00000        662790.00000        2.00000        3.00000        5.00000        204.00000        237.00000        265.00000        259.00000        284.00000        319.00000        37766.00000         59823.00000         74529.00000        16807.00000        17095.00000       17470.00000       167.00000       191.00000       219.00000        107.00000        117.00000        142.00000        72.00000        79.00000        98.00000        14.00000        16.00000        21.00000        82.00000        82.00000        99.00000
+SSS_5        468474.00000        482411.00000        496764.00000        4.00000        6.00000        6.00000        276.00000        310.00000        335.00000        246.00000        285.00000        302.00000        101845.00000        125919.00000        152244.00000       9174.00000         9546.00000        10462.00000       194.00000       201.00000       213.00000        101.00000        127.00000        170.00000        45.00000        54.00000        58.00000        75.00000        80.00000        89.00000        84.00000        85.00000        87.00000
+SSS_6        440208.00000        450654.00000        495613.00000        2.00000        4.00000        5.00000        263.00000        313.00000        345.00000        105.00000        113.00000        140.00000        129431.00000        131038.00000        149989.00000       3706.00000         4152.00000        5025.00000        42.00000        59.00000        86.00000         189.00000        198.00000        207.00000        34.00000        52.00000        72.00000        47.00000        57.00000        57.00000        24.00000        28.00000        30.00000
+SSS_7        786455.00000        806620.00000        847738.00000        3.00000        5.00000        6.00000        186.00000        195.00000        210.00000        86.00000         120.00000        122.00000        54951.00000         73516.00000         102540.00000       14802.00000        15524.00000       16126.00000       74.00000        85.00000        113.00000        113.00000        136.00000        177.00000        61.00000        74.00000        94.00000        92.00000        95.00000        100.00000       23.00000        30.00000        45.00000
+SSS_8        425826.00000        455429.00000        490535.00000        1.00000        2.00000        4.00000        363.00000        368.00000        385.00000        167.00000        211.00000        237.00000        81521.00000         109259.00000        136777.00000       13602.00000        14187.00000       14430.00000       45.00000        65.00000        82.00000         72.00000         99.00000         108.00000        43.00000        54.00000        84.00000        79.00000        87.00000        93.00000        41.00000        41.00000        46.00000
+SSS_9        760132.00000        799309.00000        842993.00000        4.00000        5.00000        5.00000        176.00000        219.00000        255.00000        228.00000        275.00000        320.00000        38486.00000         55561.00000         58534.00000        13603.00000        14240.00000       14631.00000       377.00000       397.00000       406.00000        139.00000        181.00000        216.00000        68.00000        84.00000        85.00000        85.00000        95.00000        101.00000       21.00000        25.00000        41.00000
+SSS_10       368282.00000        401149.00000        428220.00000        1.00000        3.00000        4.00000        325.00000        367.00000        413.00000        261.00000        284.00000        330.00000        132332.00000        159399.00000        181603.00000       8585.00000         8974.00000        9085.00000        249.00000       270.00000       274.00000        135.00000        157.00000        192.00000        64.00000        86.00000        97.00000        18.00000        24.00000        26.00000        53.00000        69.00000        80.00000
+SSS_11       983196.00000        1025868.00000       1066856.00000       1.00000        2.00000        3.00000        306.00000        323.00000        330.00000        90.00000         134.00000        173.00000        70043.00000         78712.00000         89443.00000        7131.00000         7628.00000        7670.00000        53.00000        77.00000        105.00000        115.00000        155.00000        185.00000        54.00000        80.00000        87.00000        58.00000        64.00000        67.00000        86.00000        96.00000        101.00000
+SSS_12       1044269.00000       1048450.00000       1076580.00000       1.00000        3.00000        3.00000        325.00000        338.00000        360.00000        219.00000        230.00000        253.00000        143298.00000        152331.00000        172716.00000       15115.00000        15455.00000       15679.00000       142.00000       148.00000       174.00000        104.00000        111.00000        136.00000        83.00000        87.00000        96.00000        57.00000        66.00000        70.00000        96.00000        99.00000        106.00000
+SSS_13       968419.00000        1000043.00000       1048378.00000       4.00000        5.00000        5.00000        219.00000        252.00000        255.00000        171.00000        206.00000        209.00000        38258.00000         66797.00000         71647.00000        6764.00000         7370.00000        7589.00000        176.00000       196.00000       210.00000        65.00000         83.00000         105.00000        85.00000        89.00000        103.00000       37.00000        40.00000        41.00000        29.00000        41.00000        41.00000
+;
+
+Table ZB(i,j, k)
+              inp1.d          inp1.e          inp1.f          inp2.d          inp2.e          inp2.f          inp3.d          inp3.e          inp3.f          inp4.d          inp4.e          inp4.f          inp5.d          inp5.e          inp5.f          inp6.d          inp6.e          inp6.f          out1.d          out1.e          out1.f          out2.d          out2.e          out2.f          out3.d          out3.e          out3.f          out4.d          out4.e          out4.f          out5.d          out5.e          out5.f
+SSS_1        0.800000        1.000000        1.000000        0.800000        1.000000        1.000000        0.650000        0.750000        0.850000        0.650000        0.750000        0.850000        0.650000        0.750000        0.850000        0.500000        0.600000        0.700000        0.650000        0.750000        0.850000        0.500000        0.600000        0.700000        0.800000        1.000000        1.000000        0.650000        0.750000        0.850000        0.650000        0.750000        0.850000
+SSS_2        0.650000        0.750000        0.850000        0.500000        0.600000        0.700000        0.500000        0.600000        0.700000        0.500000        0.600000        0.700000        0.800000        1.000000        1.000000        0.500000        0.600000        0.700000        0.800000        1.000000        1.000000        0.800000        1.000000        1.000000        0.500000        0.600000        0.700000        0.500000        0.600000        0.700000        0.500000        0.600000        0.700000
+SSS_3        0.500000        0.600000        0.700000        0.650000        0.750000        0.850000        0.800000        1.000000        1.000000        0.650000        0.750000        0.850000        0.650000        0.750000        0.850000        0.650000        0.750000        0.850000        0.500000        0.600000        0.700000        0.800000        1.000000        1.000000        0.500000        0.600000        0.700000        0.800000        1.000000        1.000000        0.650000        0.750000        0.850000
+SSS_4        0.650000        0.750000        0.850000        0.650000        0.750000        0.850000        0.500000        0.600000        0.700000        0.800000        1.000000        1.000000        0.800000        1.000000        1.000000        0.500000        0.600000        0.700000        0.500000        0.600000        0.700000        0.650000        0.750000        0.850000        0.650000        0.750000        0.850000        0.650000        0.750000        0.850000        0.800000        1.000000        1.000000
+SSS_5        0.650000        0.750000        0.850000        0.500000        0.600000        0.700000        0.800000        1.000000        1.000000        0.650000        0.750000        0.850000        0.650000        0.750000        0.850000        0.500000        0.600000        0.700000        0.650000        0.750000        0.850000        0.500000        0.600000        0.700000        0.500000        0.600000        0.700000        0.650000        0.750000        0.850000        0.800000        1.000000        1.000000
+SSS_6        0.800000        1.000000        1.000000        0.650000        0.750000        0.850000        0.800000        1.000000        1.000000        0.800000        1.000000        1.000000        0.800000        1.000000        1.000000        0.500000        0.600000        0.700000        0.500000        0.600000        0.700000        0.650000        0.750000        0.850000        0.650000        0.750000        0.850000        0.800000        1.000000        1.000000        0.500000        0.600000        0.700000
+SSS_7        0.650000        0.750000        0.850000        0.500000        0.600000        0.700000        0.650000        0.750000        0.850000        0.650000        0.750000        0.850000        0.500000        0.600000        0.700000        0.800000        1.000000        1.000000        0.500000        0.600000        0.700000        0.500000        0.600000        0.700000        0.800000        1.000000        1.000000        0.650000        0.750000        0.850000        0.650000        0.750000        0.850000
+SSS_8        0.500000        0.600000        0.700000        0.500000        0.600000        0.700000        0.800000        1.000000        1.000000        0.800000        1.000000        1.000000        0.500000        0.600000        0.700000        0.650000        0.750000        0.850000        0.650000        0.750000        0.850000        0.500000        0.600000        0.700000        0.650000        0.750000        0.850000        0.800000        1.000000        1.000000        0.800000        1.000000        1.000000
+SSS_9        0.500000        0.600000        0.700000        0.500000        0.600000        0.700000        0.650000        0.750000        0.850000        0.650000        0.750000        0.850000        0.800000        1.000000        1.000000        0.800000        1.000000        1.000000        0.800000        1.000000        1.000000        0.500000        0.600000        0.700000        0.500000        0.600000        0.700000        0.800000        1.000000        1.000000        0.500000        0.600000        0.700000
+SSS_10       0.650000        0.750000        0.850000        0.650000        0.750000        0.850000        0.650000        0.750000        0.850000        0.650000        0.750000        0.850000        0.650000        0.750000        0.850000        0.650000        0.750000        0.850000        0.800000        1.000000        1.000000        0.800000        1.000000        1.000000        0.800000        1.000000        1.000000        0.800000        1.000000        1.000000        0.800000        1.000000        1.000000
+SSS_11       0.500000        0.600000        0.700000        0.650000        0.750000        0.850000        0.800000        1.000000        1.000000        0.650000        0.750000        0.850000        0.800000        1.000000        1.000000        0.800000        1.000000        1.000000        0.500000        0.600000        0.700000        0.800000        1.000000        1.000000        0.650000        0.750000        0.850000        0.650000        0.750000        0.850000        0.800000        1.000000        1.000000
+SSS_12       0.650000        0.750000        0.850000        0.800000        1.000000        1.000000        0.650000        0.750000        0.850000        0.500000        0.600000        0.700000        0.500000        0.600000        0.700000        0.500000        0.600000        0.700000        0.650000        0.750000        0.850000        0.650000        0.750000        0.850000        0.650000        0.750000        0.850000        0.800000        1.000000        1.000000        0.650000        0.750000        0.850000
+SSS_13       0.500000        0.600000        0.700000        0.500000        0.600000        0.700000        0.650000        0.750000        0.850000        0.500000        0.600000        0.700000        0.800000        1.000000        1.000000        0.800000        1.000000        1.000000        0.650000        0.750000        0.850000        0.500000        0.600000        0.700000        0.800000        1.000000        1.000000        0.800000        1.000000        1.000000        0.800000        1.000000        1.000000
+;
+
+Parameter beta(i, j) "crisp value of difuzzification";
+beta(i, j)= sum(k, ZB(i, j, k))/3;
+display beta;
+
+Parameter TNFN(i, j, l) " new calculated triangular normal fuzzy numbers";
+TNFN(i, j, "b")= ZA(i, j, "b");
+TNFN(i, j, "a")= (((beta(i, j)*ZA(i, j, "b"))-ZA(i, j, "b")+ZA(i, j, "a"))/beta(i, j));
+TNFN(i, j, "c")= (((beta(i, j)*ZA(i, j, "b"))-ZA(i, j, "b")+ZA(i, j, "c"))/beta(i, j));
+display TNFN;
+
+Parameter
+   alpha(w) "values of different alpha-levels"  /alpha0=0.0, alpha1=0.1, alpha2=0.2, alpha3=0.3, alpha4=0.4, alpha5=0.5, alpha6=0.6, alpha7=0.7, alpha8=0.8, alpha9=0.9, alpha10=1.0/;
+alias (w, h);
+
+Variables
+    y_cap(i, w, out),
+    x_cap(i, w, inp);
+x_cap.lo(i, w, inp) = alpha(w)*TNFN(i, inp,"b")+(1-alpha(w))*TNFN(i,inp,"a");
+x_cap.up(i, w, inp) = alpha(w)*TNFN(i, inp,"b")+(1-alpha(w))*TNFN(i,inp,"c");
+y_cap.lo(i, w, out) = alpha(w)*TNFN(i, out,"b")+(1-alpha(w))*TNFN(i,out,"a");
+y_cap.up(i, w, out) = alpha(w)*TNFN(i, out,"b")+(1-alpha(w))*TNFN(i,out,"c");
+
+*Fuzzy values (when the reliability term is not considered), as follows.
+*x_cap.lo(i,inp) = alpha*ZA(i, inp,"b")+(1-alpha)*ZA(i,inp,"a");
+*x_cap.up(i,inp) = alpha*ZA(i, inp,"b")+(1-alpha)*ZA(i,inp,"c");
+*y_cap.lo(i,out) = alpha*ZA(i, out,"b")+(1-alpha)*ZA(i,out,"a");
+*y_cap.up(i,out) = alpha*ZA(i, out,"b")+(1-alpha)*ZA(i,out,"c");
+
+display x_cap.lo, x_cap.up, y_cap.lo, y_cap.up;
+
+Parameter
+   RiL0(inp, w)
+   RoL0(out, w)
+   EffyL(i, w)
+   RiG0(inp, w)
+   RoG0(out, w)
+   EffyG(i, w)
+   xL(inp,i, w)
+   xU(inp,i, w)
+   yL(out,i, w)
+   yU(out,i, w)
+;
+
+Variable
+         tao1L    efficiency
+         tao2L    efficiency
+         SiL(inp, w)  Input slacks  1s
+         SoL(out, w)  Output slacks 1s
+         AiL(inp, w)  Input slacks   2s
+         AoL(out, w)  Output slacks  2s
+         L1L(i, w)   intensity variable
+         L2L(i, w)
+
+         tao1G    efficiency
+         tao2G    efficiency
+         SiG(inp, w)  Input slacks  1s
+         SoG(out, w)  Output slacks 1s
+         AiG(inp, w)  Input slacks   2s
+         AoG(out, w)  Output slacks  2s
+         L1G(i, w)   intensity variable
+         L2G(i, w)
+         ;
+
+Positive variables  t1L
+                    t2L
+                    t1G
+                    t2G ;
+
+Equations
+         Obj_Fn1L(i, w)      define objective function
+         Obj_Fn2L(i, w)
+         Const11L(i, w)
+         Const12L(i, w)
+         Const21L(inp,i, w)
+         Const31L(out,i, w)
+         Const22L(inp,i, w)
+         Const32L(out,i, w)
+         Const411L(i, w) #Lr of 1st stage to select RTS condition for worst super-efficiency score computation
+         Const421L(i, w) #Lr of 2nd stage to select RTS condition for worst super-efficiency score computation
+         Const412L(i, w) #Ur of 1st stage to select RTS condition for worst super-efficiency score computation
+         Const422L(i, w) #Ur of 2nd stage to select RTS condition for worst super-efficiency score computation
+         Const51L(i, w)
+         Const52L(i, w)
+         Const61L(inp, w)
+         Const71L(out, w)
+         Const62L(inp, w)
+         Const72L(out, w)
+         Const81L
+         Const82L
+         Const9L(out,i, w)
+
+         Obj_Fn1G(i, w)      define objective function
+         Obj_Fn2G(i, w)
+         Const11G(i, w)
+         Const12G(i, w)
+         Const21G(inp,i, w)
+         Const31G(out,i, w)
+         Const22G(inp,i, w)
+         Const32G(out,i, w)
+         Const411G(i, w) #Lr of 1st stage to select RTS condition for best super-efficiency score computation
+         Const421G(i, w) #Lr of 2nd stage to select RTS condition for best super-efficiency score computation
+         Const412G(i, w) #Ur of 1st stage to select RTS condition for best super-efficiency score computation
+         Const422G(i, w) #Ur of 2nd stage to select RTS condition for best super-efficiency score computation
+         Const51G(i, w)
+         Const52G(i, w)
+         Const61G(inp, w)
+         Const71G(out, w)
+         Const62G(inp, w)
+         Const72G(out, w)
+         Const81G
+         Const82G
+         Const9G(out,i, w)
+         ;
+
+
+    Obj_Fn1L(j0, w0) ..  tao1L =e= t1L+(1/m)*sum(inp,(SiL(inp, w0)/xU(inp,j0, w0))) ;
+    Obj_Fn2L(j0, w0) ..  tao2L =e= t2L-(1/m)*sum(inp,(AiL(inp, w0)/xU(inp,j0, w0))) ;
+    Const11L(j0, w0) ..   t1L-(1/s)*sum(out,(SoL(out, w0)/yL(out,j0, w0))) =e= 1 ;
+    Const12L(j0, w0) ..   t2L+(1/s)*sum(out,(AoL(out, w0)/yL(out,j0, w0))) =e= 1 ;
+    Const21L(inp,j0, w0) .. sum(i$(not j0(i)),L1L(i, w0)*xL(inp,i, w0))-SiL(inp, w0)  =l= t1L*xU(inp,j0, w0)  ;
+    Const31L(out,j0, w0) ..  sum(i$(not j0(i)),L1L(i, w0)*yU(out,i, w0))+SoL(out, w0) =g= t1L*yL(out,j0, w0) ;
+    Const22L(inp,j0, w0) .. sum(i$(not j0(i)),L2L(i, w0)*xL(inp,i, w0))-(t2L*RiL0(inp, w0))+AiL(inp, w0)  =e= t2L*xU(inp,j0, w0)  ;
+    Const32L(out,j0, w0) ..  sum(i$(not j0(i)),L2L(i, w0)*yU(out,i, w0))+(t2L*RoL0(out, w0))-AoL(out, w0) =e= t2L*yL(out,j0, w0) ;
+    Const411L(j0, w0) ..  sum(i$(not j0(i)),L1L(i, w0)) =g= 0 ;
+    Const421L(j0, w0) ..  sum(i$(not j0(i)),L2L(i, w0)) =g= 0 ;
+    Const412L(j0, w0) ..  sum(i$(not j0(i)),L1L(i, w0)) =l= inf ;
+    Const422L(j0, w0) ..  sum(i$(not j0(i)),L2L(i, w0)) =l= inf ;
+    Const51L(i, w0) ..  L1L(i, w0) =g= 0 ;
+    Const52L(i, w0) ..  L2L(i, w0) =g= 0 ;
+    Const61L(inp, w0) .. SiL(inp, w0) =g=  0 ;
+    Const71L(out, w0) .. SoL(out, w0) =g= 0 ;
+    Const62L(inp, w0) .. AiL(inp, w0) =g=  0 ;
+    Const72L(out, w0) .. AoL(out, w0) =g= 0 ;
+    Const81L .. t1L =g=  0 ;
+    Const82L .. t2L =g=  0 ;
+    Const9L(out,j0, w0) .. SoL(out, w0) =l= t1L*yL(out,j0, w0) ;
+
+    Obj_Fn1G(j0, w0) ..  tao1G =e= t1G+(1/m)*sum(inp,(SiG(inp, w0)/xL(inp,j0, w0))) ;
+    Obj_Fn2G(j0, w0) ..  tao2G =e= t2G-(1/m)*sum(inp,(AiG(inp, w0)/xL(inp,j0, w0))) ;
+    Const11G(j0, w0) ..   t1G-(1/s)*sum(out,(SoG(out, w0)/yU(out,j0, w0))) =e= 1 ;
+    Const12G(j0, w0) ..   t2G+(1/s)*sum(out,(AoG(out, w0)/yU(out,j0, w0))) =e= 1 ;
+    Const21G(inp,j0, w0) .. sum(i$(not j0(i)),L1G(i, w0)*xU(inp,i, w0))-SiG(inp, w0)  =l= t1G*xL(inp,j0, w0)  ;
+    Const31G(out,j0, w0) ..  sum(i$(not j0(i)),L1G(i, w0)*yL(out,i, w0))+SoG(out, w0) =g= t1G*yU(out,j0, w0) ;
+    Const22G(inp,j0, w0) .. sum(i$(not j0(i)),L2G(i, w0)*xU(inp,i, w0))-(t2G*RiG0(inp, w0))+AiG(inp, w0)  =e= t2G*xL(inp,j0, w0)  ;
+    Const32G(out,j0, w0) ..  sum(i$(not j0(i)),L2G(i, w0)*yL(out,i, w0))+(t2G*RoG0(out, w0))-AoG(out, w0) =e= t2G*yU(out,j0, w0) ;
+    Const411G(j0, w0) ..  sum(i$(not j0(i)),L1G(i, w0)) =g= 0 ;
+    Const421G(j0, w0) ..  sum(i$(not j0(i)),L2G(i, w0)) =g= 0 ;
+    Const412G(j0, w0) ..  sum(i$(not j0(i)),L1G(i, w0)) =l= inf ;
+    Const422G(j0, w0) ..  sum(i$(not j0(i)),L2G(i, w0)) =l= inf ;
+    Const51G(i, w0) ..  L1G(i, w0) =g= 0 ;
+    Const52G(i, w0) ..  L2G(i, w0) =g= 0 ;
+    Const61G(inp, w0) .. SiG(inp, w0) =g=  0 ;
+    Const71G(out, w0) .. SoG(out, w0) =g= 0 ;
+    Const62G(inp, w0) .. AiG(inp, w0) =g=  0 ;
+    Const72G(out, w0) .. AoG(out, w0) =g= 0 ;
+    Const81G .. t1G =g=  0 ;
+    Const82G .. t2G =g=  0 ;
+    Const9G(out,j0, w0) .. SoG(out, w0) =l= t1G*yU(out,j0, w0) ;
+
+model LOWER_1st /Obj_Fn1L, Const11L, Const21L, Const31L, Const411L, Const412L, Const51L, Const61L, Const71L, Const81L, Const9L/;
+model LOWER_2nd /Obj_Fn2L, Const12L, Const22L, Const32L, Const421L, Const422L, Const52L, Const62L, Const72L, Const82L/;
+
+model UPPER_1st /Obj_Fn1G, Const11G, Const21G, Const31G, Const411G, Const412G, Const51G, Const61G, Const71G, Const81G, Const9G/;
+model UPPER_2nd /Obj_Fn2G, Const12G, Const22G, Const32G, Const421G, Const422G, Const52G, Const62G, Const72G, Const82G/;
+
+option DECIMALS=4;
+*option lp=cplex;
+
+alias (i,iter1);
+
+xL(inp,i,w) = x_cap.lo(i,w,inp);
+xU(inp,i,w) = x_cap.up(i,w,inp);
+yL(out,i,w) = y_cap.lo(i,w,out);
+yU(out,i,w) = y_cap.up(i,w,out);
+
+
+parameter efficiency1L(i,w) 'efficiency of each DMU at 1st stage'
+          efficiency2L(i,w) 'efficiency of each DMU at 2nd stage'
+          slacks1L(i,*,w)
+          slacks2L(i,*,w)
+
+          efficiency1G(i,w) 'efficiency of each DMU at 1st stage'
+          efficiency2G(i,w) 'efficiency of each DMU at 2nd stage'
+          slacks1G(i,*,w)
+          slacks2G(i,*,w);
+
+loop((h, iter1),
+
+w0(w)=no;
+w0(h)=yes;
+j0(i) = no;
+j0(iter1) = yes;
+
+   solve LOWER_1st using lp minimizing tao1L;
+   solve UPPER_1st using lp minimizing tao1G;
+
+   efficiency1L(iter1,h) = tao1L.l ;
+   slacks1L(iter1,inp,h) = SiL.l(inp,h)/t1L.l ;
+   slacks1L(iter1,out,h) = SoL.l(out,h)/t1L.l ;
+
+   efficiency1G(iter1,h) = tao1G.l ;
+   slacks1G(iter1,inp,h) = SiG.l(inp,h)/t1G.l ;
+   slacks1G(iter1,out,h) = SoG.l(out,h)/t1G.l ;
+);
+
+display efficiency1L,efficiency1G,slacks1L,slacks1G;
+
+*$offtext
+
+*$ontext
+
+alias (i,iter2);
+
+xL(inp,i,w) = x_cap.lo(i,w,inp);
+xU(inp,i,w) = x_cap.up(i,w,inp);
+yL(out,i,w) = y_cap.lo(i,w,out);
+yU(out,i,w) = y_cap.up(i,w,out);
+
+
+parameter efficiency2L(i,w) 'efficiency of each DMU at 2nd stage'
+          slacks2L(i,*,w)
+          superEFFICIENCY_L(i,w)
+
+          efficiency2G(i,w) 'efficiency of each DMU at 2nd stage'
+          slacks2G(i,*,w)
+          superEFFICIENCY_G(i,w)
+          IntervalEFF(i,*,w) ;
+
+loop((h, iter2),
+
+   EffyL(i,h) = efficiency1L(iter2,h);
+   RiL0(inp,h) = slacks1L(iter2,inp,h);
+   RoL0(out,h) = slacks1L(iter2,out,h);
+
+   EffyG(i,h) = efficiency1G(iter2,h);
+   RiG0(inp,h) = slacks1G(iter2,inp,h);
+   RoG0(out,h) = slacks1G(iter2,out,h);
+
+w0(w)=no;
+w0(h)=yes;
+j0(i) = no;
+j0(iter2) = yes;
+
+   solve LOWER_2nd using lp minimizing tao2L;
+   solve UPPER_2nd using lp minimizing tao2G;
+
+   efficiency2L(iter2,h) = tao2L.l ;
+   slacks2L(iter2,inp,h) = AiL.l(inp,h)/t2L.l ;
+   slacks2L(iter2,out,h) = AoL.l(out,h)/t2L.l ;
+
+   superEFFICIENCY_L(iter2,h)$(EffyL(iter2,h)>1) = ((EffyL(iter2,h)-1)*tao2L.l)+1;
+   superEFFICIENCY_L(iter2,h)$(EffyL(iter2,h)<=1) = tao2L.l;
+
+   efficiency2G(iter2,h) = tao2G.l ;
+   slacks2G(iter2,inp,h) = AiG.l(inp,h)/t2G.l ;
+   slacks2G(iter2,out,h) = AoG.l(out,h)/t2G.l ;
+
+   superEFFICIENCY_G(iter2,h)$(EffyG(iter2,h)>1) = ((EffyG(iter2,h)-1)*tao2G.l)+1;
+   superEFFICIENCY_G(iter2,h)$(EffyG(iter2,h)<=1) = tao2G.l;
+
+   IntervalEFF(iter2,'LOW',h) = superEFFICIENCY_L(iter2,h);
+   IntervalEFF(iter2,'UPP',h) = superEFFICIENCY_G(iter2,h);
+);
+
+*execute_unload "IntervalSupEFF_ZN-SBM.gdx", IntervalEFF;
+*execute 'gdxxrw.exe IntervalSupEFF_ZN-SBM.gdx par=IntervalEFF';
+
+display superEFFICIENCY_L,superEFFICIENCY_G,IntervalEFF;
+
+parameter be
+          varphi
+          ;
+be=smin((i,w), superEFFICIENCY_L(i,w));
+varphi=smax((i,w), superEFFICIENCY_G(i,w));
+
+parameter
+         RI(i) "ranking index value" ;
+
+RI(i)=sum(w, (superEFFICIENCY_G(i,w)-be))/((sum(w, (superEFFICIENCY_G(i,w)-be))-(sum(w, (superEFFICIENCY_L(i,w)-varphi)))));
+
+*execute_unload "Ranking_Index_ZN-SBM.gdx", RI;
+*execute 'gdxxrw.exe Ranking_Index_ZN-SBM.gdx par=RI';
+
+display RI;
+
+$Ontext
+
+Based on the values of RI, rank the DMUs (i.e., suppliers) in its "descending order".
+
+NOTE: 
+
+## Under CRS condition:
+Const411L(j0, w0) ..  sum(i$(not j0(i)),L1L(i, w0)) =g= 0 ;
+Const421L(j0, w0) ..  sum(i$(not j0(i)),L2L(i, w0)) =g= 0 ;
+Const412L(j0, w0) ..  sum(i$(not j0(i)),L1L(i, w0)) =l= inf ;
+Const422L(j0, w0) ..  sum(i$(not j0(i)),L2L(i, w0)) =l= inf ;
+
+Const411G(j0, w0) ..  sum(i$(not j0(i)),L1G(i, w0)) =g= 0 ;
+Const421G(j0, w0) ..  sum(i$(not j0(i)),L2G(i, w0)) =g= 0 ;
+Const412G(j0, w0) ..  sum(i$(not j0(i)),L1G(i, w0)) =l= inf ;
+Const422G(j0, w0) ..  sum(i$(not j0(i)),L2G(i, w0)) =l= inf ;
+
+## Under VRS condition:
+Const411L(j0, w0) ..  sum(i$(not j0(i)),L1L(i, w0)) =g= t1L ;
+Const421L(j0, w0) ..  sum(i$(not j0(i)),L2L(i, w0)) =g= t2L ;
+Const412L(j0, w0) ..  sum(i$(not j0(i)),L1L(i, w0)) =l= t1L ;
+Const422L(j0, w0) ..  sum(i$(not j0(i)),L2L(i, w0)) =l= t2L ;
+
+Const411G(j0, w0) ..  sum(i$(not j0(i)),L1G(i, w0)) =g= t1G ;
+Const421G(j0, w0) ..  sum(i$(not j0(i)),L2G(i, w0)) =g= t2G ;
+Const412G(j0, w0) ..  sum(i$(not j0(i)),L1G(i, w0)) =l= t1G ;
+Const422G(j0, w0) ..  sum(i$(not j0(i)),L2G(i, w0)) =l= t2G ;
+
+## Under NDRS condition:
+Const411L(j0, w0) ..  sum(i$(not j0(i)),L1L(i, w0)) =g= t1L ;
+Const421L(j0, w0) ..  sum(i$(not j0(i)),L2L(i, w0)) =g= t2L ;
+Const412L(j0, w0) ..  sum(i$(not j0(i)),L1L(i, w0)) =l= inf ;
+Const422L(j0, w0) ..  sum(i$(not j0(i)),L2L(i, w0)) =l= inf ;
+
+Const411G(j0, w0) ..  sum(i$(not j0(i)),L1G(i, w0)) =g= t1G ;
+Const421G(j0, w0) ..  sum(i$(not j0(i)),L2G(i, w0)) =g= t2G ;
+Const412G(j0, w0) ..  sum(i$(not j0(i)),L1G(i, w0)) =l= inf ;
+Const422G(j0, w0) ..  sum(i$(not j0(i)),L2G(i, w0)) =l= inf ;
+
+## Under NIRS condition:
+Const411L(j0, w0) ..  sum(i$(not j0(i)),L1L(i, w0)) =g= 0 ;
+Const421L(j0, w0) ..  sum(i$(not j0(i)),L2L(i, w0)) =g= 0 ;
+Const412L(j0, w0) ..  sum(i$(not j0(i)),L1L(i, w0)) =l= t1L ;
+Const422L(j0, w0) ..  sum(i$(not j0(i)),L2L(i, w0)) =l= t2L ;
+
+Const411G(j0, w0) ..  sum(i$(not j0(i)),L1G(i, w0)) =g= 0 ;
+Const421G(j0, w0) ..  sum(i$(not j0(i)),L2G(i, w0)) =g= 0 ;
+Const412G(j0, w0) ..  sum(i$(not j0(i)),L1G(i, w0)) =l= t1G ;
+Const422G(j0, w0) ..  sum(i$(not j0(i)),L2G(i, w0)) =l= t2G ;
+
+$Offtext
